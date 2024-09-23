@@ -1,7 +1,7 @@
 import pulp
 import numpy as np
 
-def solve(dist_matrix, time_limit):
+def example_solver(dist_matrix, time_limit):
     # Number of cities
     n = len(dist_matrix)
     
@@ -35,14 +35,25 @@ def solve(dist_matrix, time_limit):
     tsp_model.solve(pulp.PULP_CBC_CMD(timeLimit=time_limit))
 
     # Extract the solution
-    tour = []
+    x_vars = []
     if pulp.LpStatus[tsp_model.status] == 'Optimal':
         print(f"Optimal tour cost: {pulp.value(tsp_model.objective)}")
         for i in range(n):
             for j in range(n):
                 if pulp.value(x[i][j]) == 1:
-                    tour.append((i, j))
+                    x_vars.append((i,j))
     else:
         print("No optimal solution found.")
+
+    # Convert the decision variables into a list representing the order in which cities are visited
+    tour = [0]
+    current_city = 0
+    while len(x_vars) > 0:
+        for i in range(n):
+            if (current_city, i) in x_vars:
+                x_vars.remove((current_city, i))
+                current_city = i
+                tour.append(current_city)
+                break
 
     return tour
