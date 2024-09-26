@@ -14,6 +14,8 @@ dist_matrix = distance_matrix(coords, coords) # Generate the distance matrix
 # Call your solver here to take the distance matrix and time limit in seconds as input and provide a tour with 0-based indexing as output
 tour = exact_solver(dist_matrix, time_limit)
 # tour = random_solver(dist_matrix, time_limit)
+
+# Evaluate your solution
 total_distance = calculate_tour_distance(tour, dist_matrix) # Evaluate your solution
 
 # Import an optimal solution
