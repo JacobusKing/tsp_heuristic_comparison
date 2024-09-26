@@ -1,7 +1,11 @@
 import pulp
 import numpy as np
+from evaluate import calculate_tour_distance
+import time
+import math
+import random
 
-def example_solver(dist_matrix, time_limit):
+def exact_solver(dist_matrix, time_limit):
     # Number of cities
     n = len(dist_matrix)
     
@@ -57,3 +61,21 @@ def example_solver(dist_matrix, time_limit):
                 break
 
     return tour
+
+def random_solver(dist_matrix, time_limit):
+    start_time = time.time() # Start the "timer"
+    n = len(dist_matrix) # Get the number of cities in the instance
+    best_obj = math.inf # Start out with a "best" objective function value of infinity
+    best_sol = None # Variable where we will store the solution corresponding to the best objective function value
+
+    iteration = 1
+    while time.time() - start_time < time_limit: # Make sure that we stick to our time limit
+        test_sol = [i for i in range(n)]
+        random.shuffle(test_sol) # Generate a random solution
+        obj = calculate_tour_distance(test_sol, dist_matrix) # Get the objective function value of the randomly generated solution
+        if obj < best_obj: # Check whether the new random solution is better than the incumbent solution
+            best_sol = test_sol
+            best_obj = obj
+            print(f"New best feasible solution at iteration {iteration}: {best_obj}")
+        iteration += 1
+    return best_sol
