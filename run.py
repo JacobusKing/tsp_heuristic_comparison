@@ -5,7 +5,7 @@ from evaluate import calculate_tour_distance, plot_tour
 
 name = "Your_Solver_Name"
 time_limit = 60 # Specify the time limit in seconds that will be provided to the solver
-file = 'att48' # Specify the file name containing the instance to be run
+file = 'ulysses22' # Specify the file name containing the instance to be run
 
 # Import instance
 coords = parse_tsplib(file) # Obtain the coordinates of cities in the instance
