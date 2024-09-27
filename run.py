@@ -5,7 +5,7 @@ from evaluate import calculate_tour_distance, plot_tour
 
 name = "Your_Solver_Name"
 time_limit = 60 # Specify the time limit in seconds that will be provided to the solver
-file = 'test' # Specify the file name containing the instance to be run
+file = 'att48' # Specify the file name containing the instance to be run
 
 # Import instance
 coords = parse_tsplib(file) # Obtain the coordinates of cities in the instance
@@ -20,7 +20,7 @@ total_distance = calculate_tour_distance(tour, dist_matrix) # Evaluate your solu
 
 # Import an optimal solution
 optimal_tour = parse_tour_file(file)
-optimal_tour = [city - 1 for city in optimal_tour] # Convert 1-based index from the .opt.tour file to 0-based index for the distance matrix
+optimal_tour = [city - 1 for city in optimal_tour] + [0] # Convert 1-based index from the .opt.tour file to 0-based index for the distance matrix
 optimal_total_distance = calculate_tour_distance(optimal_tour, dist_matrix)
 
 # Plot both solutions
