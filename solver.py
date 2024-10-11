@@ -95,13 +95,6 @@ def jk_solver(dist_matrix, time_limit, nit):
             current_obj = test_obj
             print("Accepting non-improving move.")
 
-        # if iterations_since_improvement%1000000 == 1:
-        #     print("Expanding exploration.")
-        #     nit *= 1.1
-        # if iteration%1000000 == 1:
-        #     print("Focussing on exploitation.")
-        #     nit *= 0.9
-
         iteration += 1
         iterations_since_improvement += 1
     return best_route

@@ -12,7 +12,7 @@ coords = parse_tsplib(file) # Obtain the coordinates of cities in the instance
 dist_matrix = distance_matrix(coords, coords) # Generate the distance matrix
 
 # Call your solver here to take the distance matrix and time limit in seconds as input and provide a tour with 0-based indexing as output
-tour = jk_solver(dist_matrix, time_limit*0.9, nit = 0.00001)
+tour = jk_solver(dist_matrix, time_limit, nit = 0.00001)
 # print('Starting full 2-opt.')
 # tour = full_two_opt(tour, dist_matrix, time_limit*0.1)
 
