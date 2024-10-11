@@ -4,6 +4,7 @@ from evaluate import calculate_tour_distance
 import time
 import math
 import random
+import matplotlib.pyplot as plt
 
 def exact_solver(dist_matrix, time_limit):
     # Number of cities
@@ -62,6 +63,23 @@ def exact_solver(dist_matrix, time_limit):
 
     return tour
 
+
+def plot_improvement(data):
+    # Separate keys and values for plotting
+    x = list(data.keys())
+    y = list(data.values())
+
+    # Plot the data
+    plt.figure(figsize=(10, 6))
+    plt.plot(x, y, marker='o', linestyle='-', color='b')  # Line plot with markers
+    plt.xlabel('Iteration')
+    plt.ylabel('Distance')
+    plt.title('Improvement of best solution found')
+    plt.grid(True)
+    plt.savefig("output/improvement.png")
+    plt.show()
+    return
+
 def jk_solver(dist_matrix, time_limit, nit):
     start_time = time.time() # Start the "timer"
     n = len(dist_matrix) # Get the number of cities in the instance
@@ -76,7 +94,10 @@ def jk_solver(dist_matrix, time_limit, nit):
 
     iteration = 1
     iterations_since_improvement = 0
+    plot = {}
     while time.time() - start_time < time_limit: # Make sure that we stick to our time limit
+        plot[iteration] = best_obj
+
         i = random.choice(range(1, n - 2))
         k = random.choice(range(i + 1, n))
 
@@ -97,6 +118,8 @@ def jk_solver(dist_matrix, time_limit, nit):
 
         iteration += 1
         iterations_since_improvement += 1
+
+    plot_improvement(plot)
     return best_route
 
 def two_opt(route, i, k):
