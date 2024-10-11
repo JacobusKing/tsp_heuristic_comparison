@@ -1,19 +1,20 @@
 from scipy.spatial import distance_matrix
 from import_data import parse_tsplib, parse_tour_file
-from solver import exact_solver, random_solver
+from solver import exact_solver, jk_solver, full_two_opt
 from evaluate import calculate_tour_distance, plot_tour
 
-name = "Your_Solver_Name"
+name = "Jacobus_King"
 time_limit = 60 # Specify the time limit in seconds that will be provided to the solver
-file = 'ulysses22' # Specify the file name containing the instance to be run
+file = 'tsp225' # Specify the file name containing the instance to be run
 
 # Import instance
 coords = parse_tsplib(file) # Obtain the coordinates of cities in the instance
 dist_matrix = distance_matrix(coords, coords) # Generate the distance matrix
 
 # Call your solver here to take the distance matrix and time limit in seconds as input and provide a tour with 0-based indexing as output
-tour = exact_solver(dist_matrix, time_limit)
-# tour = random_solver(dist_matrix, time_limit)
+tour = jk_solver(dist_matrix, time_limit*0.9, nit = 0.00001)
+# print('Starting full 2-opt.')
+# tour = full_two_opt(tour, dist_matrix, time_limit*0.1)
 
 # Evaluate your solution
 total_distance = calculate_tour_distance(tour, dist_matrix) # Evaluate your solution
